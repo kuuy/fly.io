@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for taoniu-go on 2023-11-24T18:20:54+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "taoniu-go"
+primary_region = "waw"
+
+[build]
+  image = "redis:6-bookworm"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 3306
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[mounts]
+  source = "data"
+  destination = "/data"
+  initial_size = "1gb"
+  auto_extend_size_threshold = 0

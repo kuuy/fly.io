@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for taoniu-db on 2023-11-24T18:05:00+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "taoniu-db"
+primary_region = "waw"
+
+[build]
+  image = "postgres:15-bookworm"
+
+[env]
+  POSTGRES_PASSWORD = "ND382aitA2PR01T"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 5432
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[mounts]
+  source = "data"
+  destination = "/data"
+  initial_size = "1gb"
+  auto_extend_size_threshold = 0

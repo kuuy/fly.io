@@ -1,0 +1,48 @@
+# fly.toml app configuration file generated for taoniu on 2023-11-25T03:40:53+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "taoniu"
+primary_region = "waw"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[[mounts]]
+  source = "data"
+  destination = "/data"
+  initial_size = "1gb"
+  auto_extend_size_threshold = 0
+
+[[services]]
+  internal_port = 80
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+    [services.ports.tls_options]
+      alpn = ["h2", "http/1.1"]
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 200
+    soft_limit = 100
+
+[[services]]
+  internal_port = 443
+  protocol = "udp"
+
+  [[services.ports]]
+    start_port = 20000
+    end_port = 50000
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
