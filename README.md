@@ -1,0 +1,2 @@
+# fly.io
+Hobby Plan
